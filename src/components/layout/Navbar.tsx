@@ -34,13 +34,15 @@ export default function Navbar() {
 
           {/* Desktop Buttons */}
           <div className="hidden items-center gap-3 md:flex">
-            <button className="rounded-xl border border-emerald-600 px-5 py-2 text-emerald-600 transition hover:bg-emerald-50">
-              Login
-            </button>
+            <Link href={"/login"}>
+              <button className="rounded-xl border border-emerald-600 px-5 py-2 text-emerald-600 transition hover:bg-emerald-50 cursor-pointer">
+                Login
+              </button></Link>
 
-            <button className="rounded-xl bg-emerald-600 px-5 py-2 text-white transition hover:bg-emerald-700">
-              Register
-            </button>
+            <Link href={"/register"}>
+              <button className="rounded-xl bg-emerald-600 px-5 py-2 text-white transition hover:bg-emerald-700 cursor-pointer">
+                Register
+              </button></Link>
           </div>
 
           {/* Mobile Button */}
