@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Container from "@/components/shared/Container";
 import PlantCard from "@/components/shared/PlantCard";
-import { featuredPlants } from "@/constants/plants";
+import { featuredPlants } from "@/data/plants";
 
 export default function FeaturedPlants() {
     return (

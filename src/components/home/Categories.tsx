@@ -1,6 +1,6 @@
 import Container from "@/components/shared/Container";
 import CategoryCard from "@/components/shared/CategoryCard";
-import { categories } from "@/constants/categories";
+import { categories } from "@/data/categories";
 
 export default function Categories() {
     return (
