@@ -19,25 +19,38 @@ export default function Navbar() {
   const [user, setUser] = useState<NavbarUser | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser) as NavbarUser;
-
-        // Resolves the ESLint rule error by running after the initial rendering cycle
-        queueMicrotask(() => {
-          setUser(parsedUser);
-        });
-      } catch (error) {
-        console.error("Failed to parse user from localStorage", error);
+    const checkUser = () => {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser) as NavbarUser;
+          queueMicrotask(() => {
+            setUser(parsedUser);
+          });
+        } catch (error) {
+          console.error("Failed to parse user from localStorage", error);
+          setUser(null);
+        }
+      } else {
+        setUser(null);
       }
-    }
+    };
+
+    checkUser();
+
+    window.addEventListener("auth-change", checkUser);
+
+    return () => {
+      window.removeEventListener("auth-change", checkUser);
+    };
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    setUser(null);
+
+    window.dispatchEvent(new Event("auth-change"));
+
     window.location.href = "/";
   };
 
