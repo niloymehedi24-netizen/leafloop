@@ -213,24 +213,6 @@ npm run dev
 
 ---
 
-## Home Page
-
-_Add your screenshot here_
-
----
-
-## Explore Page
-
-_Add your screenshot here_
-
----
-
-## Dashboard
-
-_Add your screenshot here_
-
----
-
 # 👨‍💻 Author
 
 **Mehedi Hasan Niloy**
