@@ -11,10 +11,17 @@ export default function ExplorePage() {
     const [plants, setPlants] = useState<Plant[]>([]);
     const [loading, setLoading] = useState(true);
 
+    // Search and Filtering State
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("");
     const [sort, setSort] = useState("");
 
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const itemsPerPage = 6;
+
+    // Fetch plants whenever any query parameters or the current page changes
     useEffect(() => {
         async function loadPlants() {
             setLoading(true);
@@ -23,10 +30,13 @@ export default function ExplorePage() {
                 const data = await getPlants(
                     search,
                     category,
-                    sort
+                    sort,
+                    currentPage,
+                    itemsPerPage
                 );
 
-                setPlants(data);
+                setPlants(data.plants);
+                setTotalPages(data.pagination.totalPages);
             } catch (error) {
                 console.error(error);
             } finally {
@@ -35,7 +45,7 @@ export default function ExplorePage() {
         }
 
         loadPlants();
-    }, [search, category, sort]);
+    }, [search, category, sort, currentPage]);
 
     return (
         <section className="bg-slate-50 py-20">
@@ -56,19 +66,24 @@ export default function ExplorePage() {
                 </div>
 
                 {/* Filters */}
-
                 <div className="mb-12 grid gap-5 md:grid-cols-3">
                     <input
                         type="text"
                         placeholder="Search plants..."
                         value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            setCurrentPage(1); // Reset page directly on input change
+                        }}
                         className="rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-emerald-500"
                     />
 
                     <select
                         value={category}
-                        onChange={(e) => setCategory(e.target.value)}
+                        onChange={(e) => {
+                            setCategory(e.target.value);
+                            setCurrentPage(1); // Reset page directly on category change
+                        }}
                         className="rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-emerald-500"
                     >
                         <option value="">All Categories</option>
@@ -83,7 +98,10 @@ export default function ExplorePage() {
 
                     <select
                         value={sort}
-                        onChange={(e) => setSort(e.target.value)}
+                        onChange={(e) => {
+                            setSort(e.target.value);
+                            setCurrentPage(1); // Reset page directly on sort change
+                        }}
                         className="rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-emerald-500"
                     >
                         <option value="">Newest</option>
@@ -93,7 +111,6 @@ export default function ExplorePage() {
                 </div>
 
                 {/* Content */}
-
                 {loading ? (
                     <div className="py-20 text-center text-xl font-semibold">
                         Loading Plants...
@@ -109,14 +126,53 @@ export default function ExplorePage() {
                         </p>
                     </div>
                 ) : (
-                    <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
-                        {plants.map((plant) => (
-                            <PlantCard
-                                key={plant._id}
-                                plant={plant}
-                            />
-                        ))}
-                    </div>
+                    <>
+                        <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+                            {plants.map((plant) => (
+                                <PlantCard
+                                    key={plant._id}
+                                    plant={plant}
+                                />
+                            ))}
+                        </div>
+
+                        {/* Pagination Controls */}
+                        {totalPages > 1 && (
+                            <div className="mt-16 flex items-center justify-center gap-2">
+                                <button
+                                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}
+                                    className="rounded-xl border border-slate-300 bg-white px-4 py-2.5 font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+                                >
+                                    Previous
+                                </button>
+
+                                {Array.from({ length: totalPages }, (_, index) => {
+                                    const pageNumber = index + 1;
+                                    return (
+                                        <button
+                                            key={pageNumber}
+                                            onClick={() => setCurrentPage(pageNumber)}
+                                            className={`h-11 w-11 rounded-xl font-semibold transition cursor-pointer ${currentPage === pageNumber
+                                                    ? "bg-emerald-600 text-white"
+                                                    : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+                                                }`}
+                                        >
+                                            {pageNumber}
+                                        </button>
+                                    );
+                                })}
+
+                                <button
+                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                                    disabled={currentPage === totalPages}
+                                    className="rounded-xl border border-slate-300 bg-white px-4 py-2.5 font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        )}
+                    </>
                 )}
             </Container>
         </section>

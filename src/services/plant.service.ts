@@ -18,6 +18,19 @@ export interface Plant extends PlantData {
   createdAt: string;
 }
 
+// ==========================================
+// NEW: Added interface for the paginated response
+// ==========================================
+export interface PaginatedPlantsResponse {
+  plants: Plant[];
+  pagination: {
+    totalItems: number;
+    totalPages: number;
+    currentPage: number;
+    itemsPerPage: number;
+  };
+}
+
 export async function addPlant(plantData: PlantData, token: string) {
   const response = await api.post("/plants", plantData, {
     headers: {
@@ -79,15 +92,27 @@ export async function deletePlant(id: string, token: string) {
   return response.data;
 }
 
-export async function getPlants(search = "", category = "", sort = "") {
+// ==========================================
+// UPDATED: Now supports pagination options and types
+// ==========================================
+export async function getPlants(
+  search = "",
+  category = "",
+  sort = "",
+  page = 1,
+  limit = 6,
+): Promise<PaginatedPlantsResponse> {
   const response = await api.get("/plants", {
     params: {
       search,
       category,
       sort,
+      page,
+      limit,
     },
   });
 
+  // Returns { plants: [...], pagination: { ... } }
   return response.data.data;
 }
 
