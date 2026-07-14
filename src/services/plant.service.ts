@@ -90,3 +90,9 @@ export async function getPlants(search = "", category = "", sort = "") {
 
   return response.data.data;
 }
+
+export async function getPlant(id: string) {
+  const response = await api.get(`/public/plants/${id}`);
+
+  return response.data.data;
+}

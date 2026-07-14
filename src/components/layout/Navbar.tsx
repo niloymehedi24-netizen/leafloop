@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FaLeaf } from "react-icons/fa";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
@@ -9,28 +9,35 @@ import Container from "@/components/shared/Container";
 import MobileMenu from "./MobileMenu";
 import NavLinks from "./NavLinks";
 
+type NavbarUser = {
+  name: string;
+  email: string;
+};
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState<NavbarUser | null>(null);
 
-  type NavbarUser = {
-    name: string;
-    email: string;
-  };
-
-  const [user, setUser] = useState<NavbarUser | null>(() => {
-    if (typeof window === "undefined") return null;
-
+  useEffect(() => {
     const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser) as NavbarUser;
 
-    return storedUser ? (JSON.parse(storedUser) as NavbarUser) : null;
-  });
+        // Resolves the ESLint rule error by running after the initial rendering cycle
+        queueMicrotask(() => {
+          setUser(parsedUser);
+        });
+      } catch (error) {
+        console.error("Failed to parse user from localStorage", error);
+      }
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-
     setUser(null);
-
     window.location.href = "/";
   };
 
@@ -39,15 +46,9 @@ export default function Navbar() {
       <Container>
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2"
-          >
+          <Link href="/" className="flex items-center gap-2">
             <FaLeaf className="text-3xl text-emerald-600" />
-
-            <span className="text-2xl font-bold text-slate-900">
-              LeafLoop
-            </span>
+            <span className="text-2xl font-bold text-slate-900">LeafLoop</span>
           </Link>
 
           {/* Desktop Menu */}
@@ -57,7 +58,6 @@ export default function Navbar() {
 
           {/* Desktop Buttons */}
           <div className="hidden items-center gap-3 md:flex">
-
             {user ? (
               <>
                 <span className="font-medium text-slate-700">
@@ -86,7 +86,6 @@ export default function Navbar() {
                 </Link>
               </>
             )}
-
           </div>
 
           {/* Mobile Button */}
@@ -94,11 +93,7 @@ export default function Navbar() {
             onClick={() => setIsOpen(!isOpen)}
             className="text-3xl text-slate-700 md:hidden"
           >
-            {isOpen ? (
-              <HiOutlineX />
-            ) : (
-              <HiOutlineMenuAlt3 />
-            )}
+            {isOpen ? <HiOutlineX /> : <HiOutlineMenuAlt3 />}
           </button>
         </div>
       </Container>

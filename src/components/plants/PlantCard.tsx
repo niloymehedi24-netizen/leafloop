@@ -10,6 +10,9 @@ interface PlantCardProps {
 export default function PlantCard({
     plant,
 }: PlantCardProps) {
+
+    console.log("Plant:", plant);
+    console.log("Plant ID:", plant._id);
     return (
         <div className="group overflow-hidden rounded-3xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
             <div className="relative h-64 overflow-hidden">
