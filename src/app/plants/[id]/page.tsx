@@ -121,7 +121,7 @@ export default function PlantDetailsPage() {
 
                         </div>
 
-                        <button className="mt-12 w-full rounded-xl bg-emerald-600 py-4 text-lg font-semibold text-white transition hover:bg-emerald-700">
+                        <button className="mt-12 w-full rounded-xl bg-emerald-600 py-4 text-lg font-semibold cursor-pointer text-white transition hover:bg-emerald-700">
                             Buy Now
                         </button>
 
