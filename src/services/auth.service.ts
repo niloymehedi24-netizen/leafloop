@@ -1,3 +1,26 @@
+// import api from "./api";
+
+// export interface RegisterData {
+//   name: string;
+//   email: string;
+//   password: string;
+// }
+
+// export async function registerUser(data: RegisterData) {
+//   const response = await api.post("/register", data);
+//   return response.data;
+// }
+
+// export interface LoginData {
+//   email: string;
+//   password: string;
+// }
+
+// export async function loginUser(data: LoginData) {
+//   const response = await api.post("/login", data);
+//   return response.data;
+// }
+
 import api from "./api";
 
 export interface RegisterData {
@@ -7,7 +30,8 @@ export interface RegisterData {
 }
 
 export async function registerUser(data: RegisterData) {
-  const response = await api.post("/register", data);
+  // Added /api prefix
+  const response = await api.post("/api/register", data);
   return response.data;
 }
 
@@ -17,6 +41,7 @@ export interface LoginData {
 }
 
 export async function loginUser(data: LoginData) {
-  const response = await api.post("/login", data);
+  // Added /api prefix
+  const response = await api.post("/api/login", data);
   return response.data;
 }
