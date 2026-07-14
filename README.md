@@ -12,7 +12,7 @@ https://your-frontend.vercel.app
 
 ### Backend API
 
-https://your-backend.vercel.app
+https://leafloop-api.onrender.com
 
 > Replace the links above after deployment.
 
