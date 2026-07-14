@@ -25,7 +25,6 @@ interface ExtendedPlant {
     description?: string;
 }
 
-// Define the shape of a backend response object that might nest the plants array inside a key
 interface NestedPlantContainer {
     plants: ExtendedPlant[];
     [key: string]: unknown;

@@ -35,7 +35,6 @@ export default function LoginPage() {
             localStorage.setItem("token", res.token);
             localStorage.setItem("user", JSON.stringify(res.user));
 
-            // 1. Dispatch a custom event to notify the Navbar immediately!
             window.dispatchEvent(new Event("auth-change"));
 
             toast.success(res.message);

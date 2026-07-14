@@ -15,9 +15,6 @@ import {
 } from "recharts";
 import { getMyPlants, Plant } from "@/services/plant.service";
 
-// ========================================================
-// Strict Interface Specifications for Stable Rendering
-// ========================================================
 interface CategoryMetric {
     name: string;
     value: number;
@@ -90,9 +87,8 @@ export default function DashboardPage() {
         fetchDashboardData();
     }, []);
 
-    // ========================================================
     // DYNAMIC COMPUTATIONS: Compute Metrics from Live Plant Data
-    // ========================================================
+
     const computedMetrics = useMemo(() => {
         let totalStockCount = 0;
         let totalValueSum = 0;
@@ -310,8 +306,8 @@ export default function DashboardPage() {
                                         <td className="px-6 py-4">
                                             <span
                                                 className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${(Number(plant.stock) || 0) > 5
-                                                        ? "bg-emerald-50 text-emerald-700"
-                                                        : "bg-amber-50 text-amber-700"
+                                                    ? "bg-emerald-50 text-emerald-700"
+                                                    : "bg-amber-50 text-amber-700"
                                                     }`}
                                             >
                                                 {plant.stock} left
