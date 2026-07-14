@@ -1,36 +1,247 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌿 LeafLoop
 
-## Getting Started
+A modern full-stack Plant Marketplace where users can explore, add, manage, edit, and discover beautiful indoor and outdoor plants. Built with Next.js, TypeScript, Express.js, MongoDB, and JWT Authentication.
 
-First, run the development server:
+---
+
+## 🔗 Live Demo
+
+### Frontend
+
+https://your-frontend.vercel.app
+
+### Backend API
+
+https://your-backend.vercel.app
+
+> Replace the links above after deployment.
+
+---
+
+# 📖 Project Overview
+
+LeafLoop is a responsive full-stack web application that allows plant lovers to browse, add, update, and manage plant listings. The application provides secure authentication using JWT and offers a clean dashboard for sellers to manage their inventory.
+
+---
+
+# ✨ Features
+
+### 🌱 Authentication
+
+- User Registration
+- User Login
+- JWT Authentication
+- Protected Routes
+
+### 🌿 Plant Management
+
+- Add New Plant
+- Update Plant
+- Delete Plant
+- Manage My Plants
+
+### 🔍 Explore Plants
+
+- Browse All Plants
+- Search by Plant Name
+- Filter by Category
+- Sort by Price
+
+### 📄 Plant Details
+
+- Individual Plant Details Page
+- Seller Information
+- Care Level
+- Stock Status
+
+### 📱 UI & UX
+
+- Fully Responsive
+- Modern Design
+- Clean Dashboard
+- Optimized Images
+- Loading States
+- Empty State UI
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+- Axios
+- React Icons
+
+## Backend
+
+- Node.js
+- Express.js
+- TypeScript
+- MongoDB
+- JWT
+- bcryptjs
+- Validator
+
+---
+
+# 📂 Folder Structure
+
+## Frontend
+
+```text
+src/
+│
+├── app/
+├── components/
+├── services/
+├── providers/
+├── lib/
+└── types/
+```
+
+## Backend
+
+```text
+src/
+│
+├── app.ts
+├── auth.ts
+├── db.ts
+├── index.ts
+├── middleware.ts
+├── routes.ts
+└── types.ts
+```
+
+---
+
+# 🔐 Environment Variables
+
+## Frontend (.env.local)
+
+```env
+NEXT_PUBLIC_API_URL=BACKEND_API
+```
+
+## Backend (.env)
+
+```env
+PORT=8000
+
+MONGODB_URI=MONGODB_URI
+
+JWT_SECRET=SECRET_KEY
+```
+
+---
+
+# 🚀 Installation
+
+## Clone Repository
+
+```bash
+git clone <repository-url>
+```
+
+---
+
+## Frontend
+
+```bash
+cd leafloop-client
+```
+
+Install packages
+
+```bash
+npm install
+```
+
+Run
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Backend
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cd leafloop-server
+```
 
-## Learn More
+Install packages
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# 📦 API Endpoints
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Authentication
+
+| Method | Endpoint        | Description   |
+| ------ | --------------- | ------------- |
+| POST   | `/api/register` | Register User |
+| POST   | `/api/login`    | Login User    |
+
+---
+
+## Plants
+
+| Method | Endpoint                 | Description            |
+| ------ | ------------------------ | ---------------------- |
+| GET    | `/api/plants`            | Get All Plants         |
+| GET    | `/api/public/plants/:id` | Get Single Plant       |
+| POST   | `/api/plants`            | Add Plant              |
+| PATCH  | `/api/plants/:id`        | Update Plant           |
+| DELETE | `/api/plants/:id`        | Delete Plant           |
+| GET    | `/api/my-plants`         | Get Logged User Plants |
+
+---
+
+# 📸 Screenshots
+
+## Home Page
+
+_Add your screenshot here_
+
+---
+
+## Explore Page
+
+_Add your screenshot here_
+
+---
+
+## Dashboard
+
+_Add your screenshot here_
+
+---
+
+# 👨‍💻 Author
+
+**Mehedi Hasan Niloy**
+
+- GitHub: https://github.com/niloymehedi24-netizen
+- LinkedIn: https://www.linkedin.com/in/mehedi-niloy/
+
+---
+
+# 📄 License
+
+This project is developed for educational purposes.
