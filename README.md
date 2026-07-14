@@ -8,7 +8,7 @@ A modern full-stack Plant Marketplace where users can explore, add, manage, edit
 
 ### Frontend
 
-https://your-frontend.vercel.app
+https://leafloop.vercel.app
 
 ### Backend API
 
