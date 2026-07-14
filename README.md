@@ -213,8 +213,6 @@ npm run dev
 
 ---
 
-# 📸 Screenshots
-
 ## Home Page
 
 _Add your screenshot here_
