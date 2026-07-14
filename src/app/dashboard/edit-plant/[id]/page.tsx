@@ -69,10 +69,11 @@ export default function EditPlantPage({ params }: PageProps) {
                 } catch (primaryError) {
                     const isAxios404 = primaryError instanceof AxiosError && primaryError.response?.status === 404;
 
+                    // Find this inside your EditPlantPage useEffect:
                     if (isAxios404) {
                         console.warn(`Endpoint /plants/${id} returned 404. Attempting public path routing fallback...`);
-                        // Try Route Option B: Public Path Endpoint Fallback matching backend structure
-                        const publicRes = await api.get(`/public/plants/${id}`, {
+
+                        const publicRes = await api.get(`/api/public/plants/${id}`, {
                             headers: { Authorization: `Bearer ${token}` }
                         });
                         responseData = publicRes.data?.data || publicRes.data;
