@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
 import { navLinks } from "@/constants/navigation";
 
 interface NavLinksProps {
@@ -13,9 +14,19 @@ export default function NavLinks({
 }: NavLinksProps) {
   const pathname = usePathname();
 
+  const user =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("user") || "null")
+      : null;
+
+  const filteredLinks = navLinks.filter((link) => {
+    if (link.private && !user) return false;
+    return true;
+  });
+
   return (
     <>
-      {navLinks.map((link) => {
+      {filteredLinks.map((link) => {
         const active = pathname === link.href;
 
         return (
@@ -24,15 +35,10 @@ export default function NavLinks({
             href={link.href}
             className={`
               transition-all duration-300
-              ${
-                mobile
-                  ? "block py-2 text-lg"
-                  : ""
-              }
-              ${
-                active
-                  ? "text-emerald-600 font-semibold"
-                  : "text-slate-700 hover:text-emerald-600"
+              ${mobile ? "block py-2 text-lg" : ""}
+              ${active
+                ? "font-semibold text-emerald-600"
+                : "text-slate-700 hover:text-emerald-600"
               }
             `}
           >

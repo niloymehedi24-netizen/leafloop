@@ -1,4 +1,10 @@
-export const navLinks = [
+export interface NavLink {
+  label: string;
+  href: string;
+  private?: boolean;
+}
+
+export const navLinks: NavLink[] = [
   {
     label: "Home",
     href: "/",
@@ -12,7 +18,18 @@ export const navLinks = [
     href: "/about",
   },
   {
+    label: "Add Plant",
+    href: "/dashboard/add-plant",
+    private: true,
+  },
+  {
+    label: "Manage Plants",
+    href: "/dashboard/manage-plants",
+    private: true,
+  },
+  {
     label: "Contact",
     href: "/contact",
+    private: true,
   },
 ];
