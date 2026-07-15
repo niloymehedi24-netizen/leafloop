@@ -11,6 +11,7 @@ import {
     deletePlant,
     getMyPlants,
 } from "@/services/plant.service";
+import ProtectedRoute from "@/components/ProtectedRoutes";
 
 interface ExtendedPlant {
     _id?: string;
@@ -122,54 +123,56 @@ export default function ManagePlantsPage() {
     }
 
     return (
-        <>
-            <h1 className="mb-8 text-4xl font-bold">Manage Plants</h1>
+        <ProtectedRoute role="admin">
+            <>
+                <h1 className="mb-8 text-4xl font-bold">Manage Plants</h1>
 
-            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-                {plants.map((plant, index) => {
-                    const plantId = plant._id || plant.id || "";
-                    const plantTitle = plant.title || plant.name || `Unnamed Plant ${index + 1}`;
+                <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+                    {plants.map((plant, index) => {
+                        const plantId = plant._id || plant.id || "";
+                        const plantTitle = plant.title || plant.name || `Unnamed Plant ${index + 1}`;
 
-                    return (
-                        <div
-                            key={plantId || String(index)}
-                            className="overflow-hidden rounded-3xl bg-white shadow-lg border border-slate-100"
-                        >
-                            <Image
-                                src={plant.image || "https://images.unsplash.com/photo-1463936575829-25148e1db1b8?w=500"}
-                                alt={plantTitle}
-                                width={500}
-                                height={350}
-                                className="h-60 w-full object-cover"
-                            />
+                        return (
+                            <div
+                                key={plantId || String(index)}
+                                className="overflow-hidden rounded-3xl bg-white shadow-lg border border-slate-100"
+                            >
+                                <Image
+                                    src={plant.image || "https://images.unsplash.com/photo-1463936575829-25148e1db1b8?w=500"}
+                                    alt={plantTitle}
+                                    width={500}
+                                    height={350}
+                                    className="h-60 w-full object-cover"
+                                />
 
-                            <div className="space-y-3 p-6">
-                                <h2 className="text-2xl font-bold text-slate-800">{plantTitle}</h2>
-                                <p className="text-slate-600"><strong>Category:</strong> {plant.category || "Uncategorized"}</p>
-                                <p className="text-slate-600"><strong>Price:</strong> ${plant.price ?? 0}</p>
-                                <p className="text-slate-600"><strong>Stock:</strong> {plant.stock ?? 0}</p>
-                                <p className="text-slate-600"><strong>Care:</strong> {plant.careLevel || "Beginner"}</p>
+                                <div className="space-y-3 p-6">
+                                    <h2 className="text-2xl font-bold text-slate-800">{plantTitle}</h2>
+                                    <p className="text-slate-600"><strong>Category:</strong> {plant.category || "Uncategorized"}</p>
+                                    <p className="text-slate-600"><strong>Price:</strong> ${plant.price ?? 0}</p>
+                                    <p className="text-slate-600"><strong>Stock:</strong> {plant.stock ?? 0}</p>
+                                    <p className="text-slate-600"><strong>Care:</strong> {plant.careLevel || "Beginner"}</p>
 
-                                <div className="flex gap-3 pt-4">
-                                    <Link
-                                        href={`/dashboard/edit-plant/${plantId}`}
-                                        className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-white hover:bg-blue-700 transition"
-                                    >
-                                        <FaEdit /> Edit
-                                    </Link>
+                                    <div className="flex gap-3 pt-4">
+                                        <Link
+                                            href={`/dashboard/edit-plant/${plantId}`}
+                                            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-white hover:bg-blue-700 transition"
+                                        >
+                                            <FaEdit /> Edit
+                                        </Link>
 
-                                    <button
-                                        onClick={() => handleDelete(plantId)}
-                                        className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-red-600 py-3 text-white hover:bg-red-700 transition"
-                                    >
-                                        <FaTrash /> Delete
-                                    </button>
+                                        <button
+                                            onClick={() => handleDelete(plantId)}
+                                            className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-red-600 py-3 text-white hover:bg-red-700 transition"
+                                        >
+                                            <FaTrash /> Delete
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
-            </div>
-        </>
+                        );
+                    })}
+                </div>
+            </>
+        </ProtectedRoute>
     );
 }

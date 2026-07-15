@@ -15,6 +15,7 @@ export default function RegisterPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [role, setRole] = useState<"user" | "admin">("user");
 
     // Visibility toggles for both password input elements
     const [showPassword, setShowPassword] = useState(false);
@@ -44,6 +45,7 @@ export default function RegisterPage() {
                 name,
                 email,
                 password,
+                role,
             });
 
             // Fallback string matching rule logic to bypass optional string structures safely
@@ -179,6 +181,28 @@ export default function RegisterPage() {
                                 )}
                             </button>
                         </div>
+                    </div>
+
+                    <div>
+                        <label className="mb-2 block font-medium">
+                            Account Type
+                        </label>
+
+                        <select
+                            value={role}
+                            onChange={(e) =>
+                                setRole(e.target.value as "user" | "admin")
+                            }
+                            className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-emerald-500"
+                        >
+                            <option value="user">
+                                User
+                            </option>
+
+                            <option value="admin">
+                                Admin
+                            </option>
+                        </select>
                     </div>
 
                     <button

@@ -4,6 +4,8 @@ export interface RegisterData {
   name: string;
   email: string;
   password: string;
+
+  role: "user" | "admin";
 }
 
 export async function registerUser(data: RegisterData) {
