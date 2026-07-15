@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -8,13 +8,34 @@ interface Props {
     role?: "admin" | "user";
 }
 
-export default function ProtectedRoute({
-    children,
-    role,
-}: Props) {
+export default function ProtectedRoute({ children, role }: Props) {
     const router = useRouter();
 
-    if (typeof window === "undefined") {
+    const authStatus = useMemo(() => {
+        if (typeof window === "undefined") return { loading: true, authorized: false };
+
+        const token = localStorage.getItem("token");
+        const userStr = localStorage.getItem("user");
+
+        if (!token || !userStr) {
+            router.replace("/login");
+            return { loading: false, authorized: false };
+        }
+
+        try {
+            const user = JSON.parse(userStr);
+            if (role && user?.role !== role) {
+                router.replace("/");
+                return { loading: false, authorized: false };
+            }
+            return { loading: false, authorized: true };
+        } catch (e) {
+            router.replace("/login");
+            return { loading: false, authorized: false };
+        }
+    }, [router, role]);
+
+    if (authStatus.loading) {
         return (
             <div className="flex h-screen items-center justify-center">
                 <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-600 border-t-transparent"></div>
@@ -22,28 +43,5 @@ export default function ProtectedRoute({
         );
     }
 
-    const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-
-    if (!token) {
-        router.replace("/login");
-
-        return (
-            <div className="flex h-screen items-center justify-center">
-                <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-600 border-t-transparent"></div>
-            </div>
-        );
-    }
-
-    if (role && user.role !== role) {
-        router.replace("/");
-
-        return (
-            <div className="flex h-screen items-center justify-center">
-                <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-600 border-t-transparent"></div>
-            </div>
-        );
-    }
-
-    return <>{children}</>;
+    return authStatus.authorized ? <>{children}</> : null;
 }
